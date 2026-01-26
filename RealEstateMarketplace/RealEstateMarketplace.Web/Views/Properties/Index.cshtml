@@ -1,0 +1,144 @@
+@model IEnumerable<PropertyDto>
+@{
+    ViewData["Title"] = "Properties";
+    var search = ViewBag.Search as PropertySearchDto ?? new PropertySearchDto();
+    var categories = ViewBag.Categories as IEnumerable<CategoryDto> ?? Enumerable.Empty<CategoryDto>();
+}
+
+<section class="hero-section py-4">
+    <div class="container text-center">
+        <h1 class="fw-bold">Properties</h1>
+        <p class="lead">Find your perfect property</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Filters Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fas fa-filter me-2"></i>Filter Properties
+                    </div>
+                    <div class="card-body">
+                        <form asp-controller="Properties" asp-action="Index" method="get">
+                            <div class="mb-3">
+                                <label class="form-label">Keyword</label>
+                                <input type="text" class="form-control" name="keyword" value="@search.Keyword" placeholder="Search...">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Listing Type</label>
+                                <select class="form-select" name="listingType">
+                                    <option value="">All</option>
+                                    <option value="Sale" selected="@(search.ListingType == "Sale")">For Sale</option>
+                                    <option value="Rent" selected="@(search.ListingType == "Rent")">For Rent</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Property Type</label>
+                                <select class="form-select" name="propertyType">
+                                    <option value="">All Types</option>
+                                    <option value="House" selected="@(search.PropertyType == "House")">House</option>
+                                    <option value="Apartment" selected="@(search.PropertyType == "Apartment")">Apartment</option>
+                                    <option value="Condo" selected="@(search.PropertyType == "Condo")">Condo</option>
+                                    <option value="Townhouse" selected="@(search.PropertyType == "Townhouse")">Townhouse</option>
+                                    <option value="Villa" selected="@(search.PropertyType == "Villa")">Villa</option>
+                                    <option value="Land" selected="@(search.PropertyType == "Land")">Land</option>
+                                    <option value="Commercial" selected="@(search.PropertyType == "Commercial")">Commercial</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">City</label>
+                                <input type="text" class="form-control" name="city" value="@search.City" placeholder="Enter city">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Price Range</label>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <input type="number" class="form-control" name="minPrice" value="@search.MinPrice" placeholder="Min">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" class="form-control" name="maxPrice" value="@search.MaxPrice" placeholder="Max">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Bedrooms</label>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <input type="number" class="form-control" name="minBedrooms" value="@search.MinBedrooms" placeholder="Min">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" class="form-control" name="maxBedrooms" value="@search.MaxBedrooms" placeholder="Max">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-search me-2"></i>Search
+                            </button>
+                            <a asp-controller="Properties" asp-action="Index" class="btn btn-outline-secondary w-100 mt-2">
+                                Clear Filters
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Properties Grid -->
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="mb-0">@Model.Count() Properties Found</h5>
+                </div>
+
+                @if (!Model.Any())
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>No properties found matching your criteria.
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        @foreach (var property in Model)
+                        {
+                            <div class="col-md-4 mb-4">
+                                <div class="card property-card h-100">
+                                    <div class="position-relative">
+                                        <img src="@(property.MainImageUrl ?? "https://via.placeholder.com/400x300?text=No+Image")" 
+                                             class="card-img-top" alt="@property.Title">
+                                        <span class="property-badge badge bg-@(property.ListingType == "Sale" ? "success" : "info")">
+                                            For @property.ListingType
+                                        </span>
+                                        @if (property.IsFeatured)
+                                        {
+                                            <span class="property-featured">
+                                                <i class="fas fa-star me-1"></i>Featured
+                                            </span>
+                                        }
+                                    </div>
+                                    <div class="card-body">
+                                        <h6 class="card-title">@property.Title</h6>
+                                        <p class="property-price mb-2">$@property.Price.ToString("N0")</p>
+                                        <p class="text-muted small mb-2">
+                                            <i class="fas fa-map-marker-alt me-1"></i>@property.City, @property.State
+                                        </p>
+                                        <div class="property-meta small d-flex justify-content-between">
+                                            <span><i class="fas fa-bed me-1"></i>@property.Bedrooms Beds</span>
+                                            <span><i class="fas fa-bath me-1"></i>@property.Bathrooms Baths</span>
+                                            <span><i class="fas fa-ruler-combined me-1"></i>@property.SquareFeet</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer bg-white border-0">
+                                        <a asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id" 
+                                           class="btn btn-outline-primary w-100">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

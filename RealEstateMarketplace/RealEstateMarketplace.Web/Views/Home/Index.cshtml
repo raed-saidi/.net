@@ -1,0 +1,190 @@
+@model HomeViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1 class="display-4 fw-bold mb-4">Find Your Dream Property</h1>
+                <p class="lead mb-4">Discover the perfect home from our extensive collection of properties for sale and rent.</p>
+                <a asp-controller="Properties" asp-action="Index" class="btn btn-light btn-lg">
+                    <i class="fas fa-search me-2"></i>Browse Properties
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <div class="search-box">
+                    <h5 class="text-dark mb-4">Search Properties</h5>
+                    <form asp-controller="Properties" asp-action="Index" method="get">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="keyword" placeholder="Enter keyword...">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <select class="form-select" name="listingType">
+                                    <option value="">All Types</option>
+                                    <option value="Sale">For Sale</option>
+                                    <option value="Rent">For Rent</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <select class="form-select" name="propertyType">
+                                    <option value="">Property Type</option>
+                                    <option value="House">House</option>
+                                    <option value="Apartment">Apartment</option>
+                                    <option value="Condo">Condo</option>
+                                    <option value="Villa">Villa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="city" placeholder="City">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-search me-2"></i>Search
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center section-title">Browse by Category</h2>
+        <div class="row">
+            @foreach (var category in Model.Categories)
+            {
+                <div class="col-md-3 mb-4">
+                    <a asp-controller="Properties" asp-action="Index" class="text-decoration-none">
+                        <div class="category-card">
+                            <i class="fas @(category.IconClass ?? "fa-building")"></i>
+                            <h5 class="mb-2">@category.Name</h5>
+                            <small class="text-muted">@category.PropertyCount Properties</small>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Featured Properties -->
+@if (Model.FeaturedProperties.Any())
+{
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Featured Properties</h2>
+            <div class="row">
+                @foreach (var property in Model.FeaturedProperties)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card property-card h-100">
+                            <div class="position-relative">
+                                <img src="@(property.MainImageUrl ?? "https://via.placeholder.com/400x300?text=No+Image")" 
+                                     class="card-img-top" alt="@property.Title">
+                                <span class="property-badge badge bg-@(property.ListingType == "Sale" ? "success" : "info")">
+                                    For @property.ListingType
+                                </span>
+                                @if (property.IsFeatured)
+                                {
+                                    <span class="property-featured">
+                                        <i class="fas fa-star me-1"></i>Featured
+                                    </span>
+                                }
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@property.Title</h5>
+                                <p class="property-price">$@property.Price.ToString("N0")</p>
+                                <p class="text-muted mb-2">
+                                    <i class="fas fa-map-marker-alt me-1"></i>@property.City, @property.State
+                                </p>
+                                <div class="property-meta d-flex justify-content-between">
+                                    <span><i class="fas fa-bed me-1"></i>@property.Bedrooms Beds</span>
+                                    <span><i class="fas fa-bath me-1"></i>@property.Bathrooms Baths</span>
+                                    <span><i class="fas fa-ruler-combined me-1"></i>@property.SquareFeet sqft</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-0">
+                                <a asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id" 
+                                   class="btn btn-outline-primary w-100">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- Latest Properties -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center section-title">Latest Properties</h2>
+        <div class="row">
+            @foreach (var property in Model.LatestProperties)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card property-card h-100">
+                        <div class="position-relative">
+                            <img src="@(property.MainImageUrl ?? "https://via.placeholder.com/400x300?text=No+Image")" 
+                                 class="card-img-top" alt="@property.Title">
+                            <span class="property-badge badge bg-@(property.ListingType == "Sale" ? "success" : "info")">
+                                For @property.ListingType
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-title">@property.Title</h6>
+                            <p class="property-price mb-2">$@property.Price.ToString("N0")</p>
+                            <p class="text-muted small mb-2">
+                                <i class="fas fa-map-marker-alt me-1"></i>@property.City
+                            </p>
+                            <div class="property-meta small d-flex justify-content-between">
+                                <span><i class="fas fa-bed me-1"></i>@property.Bedrooms</span>
+                                <span><i class="fas fa-bath me-1"></i>@property.Bathrooms</span>
+                                <span><i class="fas fa-ruler-combined me-1"></i>@property.SquareFeet</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-0 pt-0">
+                            <a asp-controller="Properties" asp-action="Details" asp-route-id="@property.Id" 
+                               class="btn btn-sm btn-outline-primary w-100">View</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="text-center mt-4">
+            <a asp-controller="Properties" asp-action="Index" class="btn btn-primary btn-lg">
+                View All Properties <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 mb-4 mb-md-0">
+                <h2 class="display-4 fw-bold">500+</h2>
+                <p>Properties Listed</p>
+            </div>
+            <div class="col-md-3 mb-4 mb-md-0">
+                <h2 class="display-4 fw-bold">1000+</h2>
+                <p>Happy Clients</p>
+            </div>
+            <div class="col-md-3 mb-4 mb-md-0">
+                <h2 class="display-4 fw-bold">50+</h2>
+                <p>Cities Covered</p>
+            </div>
+            <div class="col-md-3">
+                <h2 class="display-4 fw-bold">100+</h2>
+                <p>Expert Agents</p>
+            </div>
+        </div>
+    </div>
+</section>

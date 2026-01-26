@@ -1,0 +1,14 @@
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\obj\Debug\net8.0\RealEstateMarketplace.DAL.csproj.AssemblyReference.cache
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\obj\Debug\net8.0\RealEstateMarketplace.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\obj\Debug\net8.0\RealEstateMarketplace.DAL.AssemblyInfoInputs.cache
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\obj\Debug\net8.0\RealEstateMarketplace.DAL.AssemblyInfo.cs
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\obj\Debug\net8.0\RealEstateMarketplace.DAL.csproj.CoreCompileInputs.cache
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\bin\Debug\net8.0\RealEstateMarketplace.DAL.deps.json
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\bin\Debug\net8.0\RealEstateMarketplace.DAL.runtimeconfig.json
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\bin\Debug\net8.0\RealEstateMarketplace.DAL.dll
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\bin\Debug\net8.0\RealEstateMarketplace.DAL.pdb
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\obj\Debug\net8.0\RealEstateMarketplace.DAL.dll
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\obj\Debug\net8.0\refint\RealEstateMarketplace.DAL.dll
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\obj\Debug\net8.0\RealEstateMarketplace.DAL.pdb
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\obj\Debug\net8.0\RealEstateMarketplace.DAL.genruntimeconfig.cache
+C:\Users\Raed\Desktop\.net\RealEstateMarketplace\RealEstateMarketplace.DAL\obj\Debug\net8.0\ref\RealEstateMarketplace.DAL.dll
